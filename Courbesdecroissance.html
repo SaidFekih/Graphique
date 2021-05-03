@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <title>Courbes de croissance</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row mt-5 border rounded">
+
+            <div class="card col-md-6 col-sm-12 mx-auto p-0 border border-light ">
+                <div class="card-header text-center">
+                    Courbes de croissance
+                </div>
+                <div class="card-body">
+                    <div class=" col-6 mx-auto">
+                        <div class="form-check form-check-inline ml-0 bg ">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1"
+                                value="bebe">
+                            <label class="form-check-label" for="inlineRadio1">Bébé</label>
+                        </div>
+                        <div class="form-check form-check-inline  ">
+                            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2"
+                                value="enfant">
+                            <label class="form-check-label" for="inlineRadio2">Enfant</label>
+                        </div>
+
+                        <div class="form-check form-check-inline ml-0 bg ">
+                            <input class="form-check-input" type="radio" name="inlineRadioSexe" id="sexe1"
+                                value="garcon">
+                            <label class="form-check-label" for="sexe1">Garçon</label>
+                        </div>
+                        <div class="form-check form-check-inline  ">
+                            <input class="form-check-input" type="radio" name="inlineRadioSexe" id="sexe2"
+                                value="fille">
+                            <label class="form-check-label" for="sexe2">Fille</label>
+                        </div>
+
+                        
+                        <input class="form-control form-control-sm mb-2 " type="text" placeholder="Age" id="txtAge">
+                        <input class="form-control form-control-sm mb-2 " type="text" placeholder="Taille" id="txtTaille">
+                        <input class="form-control form-control-sm mb-2 " type="text" placeholder="Poids" id="txtPoids">
+
+                        <button class="btn btn-success col-12 mb-2" onclick="fnCalculer()"
+                            id="btnCalculer">Calculer</button>
+                        <!-- <h1 class="categorie">Result</h1>
+                        <h2>Age</h2>
+                        <h3>taille</h3>
+                        <h4>Poids</h4>
+                        <h5>Sexe</h5> -->
+                    </div>
+                </div>
+                <canvas id="graph1"></canvas>
+                <div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script>
+    
+    let btnShow = document.querySelector('button');
+    let result = document.querySelector('h1');
+    let age = document.querySelector('h2');
+    let sex= document.querySelector('h5');
+    let taille = document.querySelector('h3');
+    let poids = document.querySelector('h4');
+
+    function fnCalculer() {
+         
+        let selected = document.querySelector('input[type="radio"]:checked');
+        result.innerText = selected.value;
+        let selectedAge = document.getElementById("txtAge");
+        age.innerText = selectedAge.value;
+        let selectedTaille = document.getElementById("txtTaille");
+        taille.innerText=selectedTaille.value;
+        let selectedPoids = document.getElementById("txtPoids");
+        poids.innerText = selectedPoids.value;
+        let selectedSex = document.querySelector('input[name="inlineRadioSexe"]:checked');
+        sex.innerText= selectedSex.value;
+        //alert(selectedSex.value);
+
+        if((selectedAge.value != "")&(selectedTaille.value !="")&(selectedPoids.value != "")){// verification des champs s'ils sont vide 
+            dessinerCourbe();
+        }
+    };
+    
+
+    let ctx = document.getElementById('graph1').getContext('2d')
+
+    let data = {
+        labels: ['0', '3', '6', '9', '12', '15', '18', '21', '24'],
+        datasets: [
+            {
+                label: 'My First dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [10, 30, 20, 40]
+            },
+            {
+                data: [50, 20, 60, 90]
+            }
+        ]
+    }
+
+    let options
+
+    let config = {
+        type: 'line',
+        data: data,
+        options: options
+    }
+    let graph1 = new Chart(ctx, config)
+</script>
